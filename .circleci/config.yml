@@ -41,10 +41,3 @@ jobs:
             docker build -t brenopolanski/saiku_community_website:$TAG .
             docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
             docker push brenopolanski/saiku_community_website:$TAG
-
-      - store_artifacts:
-          path: /tmp/test-results
-          destination: raw-test-output
-
-      - store_test_results:
-          path: /tmp/test-results
