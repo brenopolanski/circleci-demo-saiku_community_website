@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: moregreenhouse/tm-base
+      - image: docker:17.10.0-ce-git
 
     working_directory: ~/repo
 
@@ -11,34 +11,9 @@ jobs:
 
       - setup_remote_docker
 
-      - run:
-          name: Install Docker client
-          command: |
-            set -x
-            VER="17.03.0-ce"
-            curl -L -o /tmp/docker-$VER.tgz https://get.docker.com/builds/Linux/x86_64/docker-$VER.tgz
-            tar -xz -C /tmp -f /tmp/docker-$VER.tgz
-            mv /tmp/docker/* /usr/bin
-
-      - run:
-          name: Install Docker Compose
-          command: |
-            set -x
-            curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-            chmod +x /usr/local/bin/docker-compose
-
-      - run:
-          name: Start container and verify it's working
-          command: |
-            set -x
-            docker-compose up -d
-            # curl --retry 10 --retry-delay 5 -v http://localhost:8080
-
       - deploy:
           name: Build and push Docker image
           command: |
-            # TAG="0.1.${CIRCLE_BUILD_NUM}"
-            TAG="1.0.0"
-            docker build -t brenopolanski/saiku_community_website:$TAG .
+            docker build -t brenopolanski/demo-saiku-community-website .
             docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
-            docker push brenopolanski/saiku_community_website:$TAG
+            docker push brenopolanski/demo-saiku-community-website
