@@ -37,7 +37,8 @@ jobs:
       - deploy:
           name: Build and push Docker image
           command: |
-            TAG="0.1.${CIRCLE_BUILD_NUM}"
+            # TAG="0.1.${CIRCLE_BUILD_NUM}"
+            TAG="1.0.0"
             docker build -t brenopolanski/saiku_community_website:$TAG .
             docker login -u $DOCKER_LOGIN -p $DOCKER_PASSWORD
             docker push brenopolanski/saiku_community_website:$TAG
