@@ -11,6 +11,8 @@ jobs:
 
       - setup_remote_docker
 
+      - run: apt-get install -y curl
+
       - run:
           name: Install Docker client
           command: |
